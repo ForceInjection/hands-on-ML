@@ -10,7 +10,7 @@
 ## 参考资料
 
 ### 《动手学机器学习》
-![动手学机器学习](hands-on-ml.jpg)
+![动手学机器学习](img/hands-on-ml.jpg)
 
 > 配套源代码下载地址：
 https://github.com/boyu-ai/Hands-on-ML
