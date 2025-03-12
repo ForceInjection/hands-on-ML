@@ -1,66 +1,48 @@
-$\bm{y}和\bm{w}的概率分布:$
+### **概率分布**  
+联合分布分解为似然和先验的乘积：  
 $$
-p(\bm{y}, \bm{w}|\bm{X}) = p(\bm{y}\bm{w},\bm{X}) p(\bm{w}) = p(\bm{w})\prod_{i=1}^{N}p(y_i|\bm{w},\bm{x}_i) \\
-$$
-
-
-$根据贝叶斯公式，模型参数\bm{w}的后验分布表示为：$
-$$
-p(\bm{w}|\bm{X},\bm{y})=\frac{p(\bm{y}, \bm{w}|\bm{X})p(\bm{w})}{p(\bm{y}|\bm{X})} \propto p(\bm{w}) \prod_{i=1}^{N}p(y_i|\bm{w}, \bm{x}_i)
-$$
-$\\$
-$设参数\bm{w}的先验分布是偏移参数为\mu=0，尺度参数为b的拉普拉斯分布，概率分布：$
-$$p(\bm{w}|\mu=0,b)=\frac{1}{2b}\exp(-\frac{|\bm{w}|}{b})$$
-$即\bm{w} 服从拉普拉斯分布，表示为 \bm{w} \sim \text{Laplace}(0, b)$
-
-
-$假设y_i和\bm{x}_i和\bm{w}之间的关系服从高斯分布，满足：$
-$$
-\begin{align*}
-y_i &\sim \mathcal{N}(\bm{x}_i^T \bm{w}, \sigma^2) \\
-p(y_i | \bm{x}_i, \bm{w}, \sigma^2) &\sim \mathcal{N}(y_i | \bm{x}_i^T \bm{w}, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp(-\frac{(y_i - \bm{w}^T\bm{x}_i)^2}{2\sigma^2})
-\end{align*}
+p(\mathbf{y}, \mathbf{w}|\mathbf{X}) = p(\mathbf{y}|\mathbf{w}, \mathbf{X}) p(\mathbf{w}) = p(\mathbf{w}) \prod_{i=1}^{N} p(y_i|\mathbf{w}, \mathbf{x}_i)
 $$
 
-
-$那么后验分布可以表示为：$
+### **贝叶斯公式与后验分布**  
+根据贝叶斯定理，模型参数的后验分布为：  
 $$
-\begin{align*}
-p(\bm{w}|\bm{X},\bm{y}) & \propto p(\bm{w}) \prod_{i=1}^{N}p(y_i|\bm{w}, \bm{x}_i) 
-\\
-& \propto p(\bm{w} | \mu=0,b) \prod_{i=1}^{N} p(y_i | \bm{x}_i, \bm{w}, \sigma^2)
-\\
-& = p(\bm{w} | \mu=0,b) \prod_{i=1}^{N} \mathcal{N}(y_i | \bm{x}_i^T \bm{w}, \sigma^2)
-\end{align*}
+p(\mathbf{w}|\mathbf{X}, \mathbf{y}) = \frac{p(\mathbf{y}|\mathbf{w}, \mathbf{X}) p(\mathbf{w})}{p(\mathbf{y}|\mathbf{X})} \propto p(\mathbf{w}) \prod_{i=1}^{N} p(y_i|\mathbf{w}, \mathbf{x}_i)
 $$
 
-$最大后验估计MAP：$
+### **先验分布与似然函数**  
+1. **先验分布**（拉普拉斯分布，对应 L1 正则项）：  
+   $$
+   p(\mathbf{w}|\mu=0, b) = \frac{1}{2b} \exp\left(-\frac{\|\mathbf{w}\|_1}{b}\right), \quad \mathbf{w} \sim \text{Laplace}(0, b)
+   $$
+
+2. **似然函数**（高斯分布，对应平方误差项）：  
+   $$
+   y_i \sim \mathcal{N}(\mathbf{x}_i^T \mathbf{w}, \sigma^2), \quad p(y_i|\mathbf{x}_i, \mathbf{w}, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(y_i - \mathbf{w}^T\mathbf{x}_i)^2}{2\sigma^2}\right)
+   $$
+
+### **后验分布推导**  
+后验分布的表达式为：  
 $$
-\begin{align*}
-\arg \max_{\bm{w}} p(\bm{w}|\bm{X}, \bm{y}) 
-& = \arg \max_{\bm{w}} \left( p(\bm{w} | \mu=0,b) \prod_{i=1}^{N} \mathcal{N}(y_i | \bm{x}_i^T \bm{w}, \sigma^2)\right)
-\\
-& = \arg \max_{\bm{w}} \left(\frac{1}{2b}\exp(-\frac{|\bm{w}|}{b}) \prod_{i=1}^{N}\frac{1}{\sqrt{2\pi\sigma^2}} \exp(-\frac{(y_i - \bm{w}^T\bm{x}_i)^2}{2\sigma^2})\right)
-\\
-&\text{取对数，连乘变连加}
-\\
-& = \arg\max_{\bm{w}}\log \left(\frac{1}{2b}\exp(-\frac{|\bm{w}|}{b}) \prod_{i=1}^{N}\frac{1}{\sqrt{2\pi\sigma^2}} \exp(-\frac{(y_i - \bm{w}^T\bm{x}_i)^2}{2\sigma^2})\right)
-\\
-& = \arg\max_{\bm{w}} \left(\log(\frac{1}{2b}\exp(-\frac{|\bm{w}|}{b})) \sum_{i=1}^{N}\log(\frac{1}{\sqrt{2\pi\sigma^2}} \exp(-\frac{(y_i - \bm{w}^T\bm{x}_i)^2}{2\sigma^2}))\right)
-\\
-& \log(\frac{1}{2b})\text{和}\log(\frac{1}{\sqrt{2\pi\sigma^2}})\text{是常数，对}\bm{w}\text{没影响，可以忽略}
-\\
-& = \arg\max_{\bm{w}}\left(-\frac{|\bm{w}|}{b} - \frac{1}{2\sigma^2} \sum_{i=1}^{N}(y_i-\bm{w}^T\bm{x}_i)^2 \right)
-\\
-& = \arg \min_{\bm{w}}\left(\frac{|\bm{w}|}{b} + \frac{1}{2\sigma^2} \sum_{i=1}^{N}(y_i-\bm{w}^T\bm{x}_i)^2 \right)
-\end{align*}
+\begin{aligned}
+p(\mathbf{w}|\mathbf{X}, \mathbf{y}) 
+&\propto p(\mathbf{w}|\mu=0, b) \prod_{i=1}^{N} \mathcal{N}(y_i|\mathbf{x}_i^T \mathbf{w}, \sigma^2) \\
+&= \frac{1}{2b} \exp\left(-\frac{\|\mathbf{w}\|_1}{b}\right) \prod_{i=1}^{N} \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(y_i - \mathbf{w}^T\mathbf{x}_i)^2}{2\sigma^2}\right)
+\end{aligned}
 $$
 
-因此，最终要解决的优化问题是：
+### **最大后验估计（MAP）**  
+目标函数取对数并简化：  
 $$
-\min_{\bm{w}}\left(\frac{|\bm{w}|}{b} + \frac{1}{2\sigma^2} \sum_{i=1}^{N}(y_i-\bm{w}^T\bm{x}_i)^2 \right)
+\begin{aligned}
+\arg\max_{\mathbf{w}} p(\mathbf{w}|\mathbf{X}, \mathbf{y}) 
+&= \arg\max_{\mathbf{w}} \left[ \log p(\mathbf{w}) + \sum_{i=1}^{N} \log p(y_i|\mathbf{w}, \mathbf{x}_i) \right] \\
+&= \arg\max_{\mathbf{w}} \left[ -\frac{\|\mathbf{w}\|_1}{b} - \frac{1}{2\sigma^2} \sum_{i=1}^{N} (y_i - \mathbf{w}^T\mathbf{x}_i)^2 \right] \\
+&= \arg\min_{\mathbf{w}} \left( \frac{\|\mathbf{w}\|_1}{b} + \frac{1}{2\sigma^2} \sum_{i=1}^{N} (y_i - \mathbf{w}^T\mathbf{x}_i)^2 \right)
+\end{aligned}
 $$
 
-这个优化目标函数，相当于给线性模型添加了L1和L2正则化约束：
-- $\frac{|\bm{w}|}{b}$是关于$\bm{w}$的L1正则化
-- $ \frac{1}{2\sigma^2} \sum_{i=1}^{N} (y_i - \bm{w}^T\bm{x}_i)^2 $ 是平方误差损失项，为 L2 正则化项,可以看作是 $ w $ 的 L2 范数的平方乘以系数 $ \frac{1}{2\sigma^2} $
+### **最终优化问题**  
+$$
+\min_{\mathbf{w}} \left( \underbrace{\frac{\|\mathbf{w}\|_1}{b}}_{\text{L1 正则项}} + \underbrace{\frac{1}{2\sigma^2} \sum_{i=1}^{N} (y_i - \mathbf{w}^T\mathbf{x}_i)^2}_{\text{平方误差项}} \right)
+$$
