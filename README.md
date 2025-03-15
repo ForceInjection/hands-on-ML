@@ -3,9 +3,11 @@
 
 ## 动手学习系列
 
+### **基础算法**
+
 * [**动手学机器学习 KNN 算法**](nju_software/动手学机器学习%20KNN%20算法.md): [配套代码](nju_software/knn.ipynb)
 * [**动手学机器学习决策树算法**](动手学机器学习决策树算法.md): [配套代码](nju_software/决策树.ipynb)
-	* [使用决策树对泰坦尼克号幸存者数据进行分类](nju_software/使用决策树对泰坦尼克号幸存者数据进行分类.md) 
+	* [_使用决策树对泰坦尼克号幸存者数据进行分类_](nju_software/使用决策树对泰坦尼克号幸存者数据进行分类.md) : [配套代码](titanic/decistion_tree.ipynb)
 * [**动手学机器学习逻辑回归算法**](nju_software/动手学机器学习逻辑回归算法.md): [配套代码](nju_software/Logistic%20Regression.ipynb)
 * [**动手学机器学习线性回归算法**](nju_software/动手学机器学习线性回归算法.md): [配套代码](nju_software/线性回归.ipynb)
 * [**动手学机器学习支持向量机算法**](nju_software/动手学机器学习支持向量机算法.md): [配套代码](nju_software/svm.ipynb)
@@ -18,7 +20,7 @@
 	* [一文读懂GBDT](nju_software/一文读懂GBDT.md)
 * [**最大似然估计（MLE）简介.md**](nju_software/最大似然估计（MLE）简介.md)
 
-**其他资料**：
+### **其他资料**
 
 * [**混淆矩阵评价指标**](nju_software/混淆矩阵评价指标.md)
 * [**数学中希腊字母表**](nju_software/数学中希腊字母表.md)
