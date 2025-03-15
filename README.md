@@ -5,11 +5,23 @@
 
 * [**动手学机器学习 KNN 算法**](nju_software/动手学机器学习%20KNN%20算法.md): [配套代码](nju_software/knn.ipynb)
 * [**动手学机器学习决策树算法**](动手学机器学习决策树算法.md): [配套代码](nju_software/决策树.ipynb)
+	* [使用决策树对泰坦尼克号幸存者数据进行分类](nju_software/使用决策树对泰坦尼克号幸存者数据进行分类.md) 
 * [**动手学机器学习逻辑回归算法**](nju_software/动手学机器学习逻辑回归算法.md): [配套代码](nju_software/Logistic%20Regression.ipynb)
 * [**动手学机器学习线性回归算法**](nju_software/动手学机器学习线性回归算法.md): [配套代码](nju_software/线性回归.ipynb)
 * [**动手学机器学习支持向量机算法**](nju_software/动手学机器学习支持向量机算法.md): [配套代码](nju_software/svm.ipynb)
+* [**动手学机器学习朴素贝叶斯算法**](nju_software/动手学机器学习朴素贝叶斯算法.md): [配套代码](nju_software/朴素贝叶斯.ipynb)
+	* [朴素贝叶斯计算：建筑工人打喷嚏后患感冒的概率](nju_software/朴素贝叶斯计算：建筑工人打喷嚏后患感冒的概率.md)
+* [**动手学机器学习随机森林算法**](nju_software/动手学机器学习随机森林算法.md): [配套代码](nju_software/随机森林.ipynb)
+* [**动手学机器学习 Kmeans 聚类算法**](nju_software/动手学机器学习%20Kmeans%20聚类算法.md): [配套代码](nju_software/kmeans.ipynb)
+* [**一文深入了解机器学习之集成学习**](nju_software/一文深入了解机器学习之集成学习.md)
+	* [Adaboost 计算示例](nju_software/Adaboost%20计算示例.md)
+	* [一文读懂GBDT](nju_software/一文读懂GBDT.md)
+* [**最大似然估计（MLE）简介.md**](nju_software/最大似然估计（MLE）简介.md)
+
+**其他资料**：
+
 * [**混淆矩阵评价指标**](nju_software/混淆矩阵评价指标.md)
-* [**数学中希腊字母表**](nju_software/数学中希腊字母表.md)
+* [**数学中希腊字母表**](nju_software/数学中希腊字母表.md)
 
 ## Kaggle入门：逻辑回归应用之Kaggle泰坦尼克之灾 
 
