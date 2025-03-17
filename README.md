@@ -18,6 +18,8 @@
 * [**一文深入了解机器学习之集成学习**](nju_software/一文深入了解机器学习之集成学习.md)
 	* [Adaboost 计算示例](nju_software/Adaboost%20计算示例.md)
 	* [一文读懂GBDT](nju_software/一文读懂GBDT.md)
+	* [Stacking 示例一（心脏）](nju_software/Stacking_heart.ipynb)
+	* [Stacking 示例二（鸢尾花）](nju_software/Stacking_iris.ipynb)
 * [**最大似然估计（MLE）简介.md**](nju_software/最大似然估计（MLE）简介.md)
 
 ### **其他资料**
