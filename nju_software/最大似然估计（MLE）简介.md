@@ -2,7 +2,7 @@
 
 ## 1、定义
 
-**最大似然估计**（`Maximum Likelihood Estimation`, `MLE`）是一种统计方法，用于在已知数据分布类型但参数未知的情况下估计模型参数。以下是MLE的求解过程：
+**最大似然估计**（`Maximum Likelihood Estimation`, `MLE`）是一种统计方法，用于在已知数据分布类型但参数未知的情况下估计模型参数。
 
 ## 2、推导过程
 

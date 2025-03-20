@@ -15,6 +15,8 @@
 	* [朴素贝叶斯计算：建筑工人打喷嚏后患感冒的概率](nju_software/朴素贝叶斯计算：建筑工人打喷嚏后患感冒的概率.md)
 * [**动手学机器学习随机森林算法**](nju_software/动手学机器学习随机森林算法.md): [配套代码](nju_software/随机森林.ipynb)
 * [**动手学机器学习 Kmeans 聚类算法**](nju_software/动手学机器学习%20Kmeans%20聚类算法.md): [配套代码](nju_software/kmeans.ipynb)
+* [**动手学机器学习层次聚类算法**](nju_software/动手学机器学习层次聚类算法.md)
+* [**动手学机器学习：DBSCAN 密度聚类算法**](nju_software/动手学机器学习：DBSCAN%20密度聚类算法.md)
 * [**一文深入了解机器学习之集成学习**](nju_software/一文深入了解机器学习之集成学习.md)
 	* [Adaboost 计算示例](nju_software/Adaboost%20计算示例.md)
 	* [一文读懂GBDT](nju_software/一文读懂GBDT.md)
