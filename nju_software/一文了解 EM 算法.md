@@ -101,7 +101,7 @@ $$
 **E 步**：对于每个观测数据 $ y_j $，计算在当前参数 $ \theta^t $ 下，选择硬币 B 的概率 $ \mu_j^t $：
 
 $$
-\mu_j^t = \frac{\pi^t p^t^{y_j} (1-p^t)^{1-y_j}}{\pi^t p^t^{y_j} (1-p^t)^{1-y_j} + (1-\pi^t) q^t^{y_j} (1-q^t)^{1-y_j}}
+\mu_j^t = \frac{\pi^t (p^t)^{y_j} (1 - p^t)^{1 - y_j}}{\pi^t (p^t)^{y_j} (1 - p^t)^{1 - y_j} + (1 - \pi^t) (q^t)^{y_j} (1 - q^t)^{1 - y_j}}
 $$
 
 **M 步**：根据计算得到的 $ \mu_j^t $，更新参数 $ \theta^{t+1} $：
