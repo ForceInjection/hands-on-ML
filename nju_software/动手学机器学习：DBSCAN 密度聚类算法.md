@@ -8,7 +8,7 @@
 
 ## 二、DBSCAN算法原理
 
-DBSCAN（Density-Based Spatial Clustering of Applications with Noise）算法是一种基于密度的聚类方法，它通过分析数据集中每个数据点的密度分布，将具有足够高密度的区域划分为簇，并将低密度区域视为噪声。与传统的划分聚类和层次聚类方法不同，DBSCAN无需预先指定聚类的数量，且能够发现任意形状的聚类，这使得它在处理复杂数据分布时具有独特的优势。
+`DBSCAN`（`Density-Based Spatial Clustering of Applications with Noise`）算法是一种基于密度的聚类方法，它通过分析数据集中每个数据点的密度分布，将具有足够高密度的区域划分为簇，并将低密度区域视为噪声。与传统的划分聚类和层次聚类方法不同，`DBSCAN`无需预先指定聚类的数量，且能够发现任意形状的聚类，这使得它在处理复杂数据分布时具有独特的优势。
 
 ### 1. 关键定义
 
