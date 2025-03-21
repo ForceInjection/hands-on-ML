@@ -23,6 +23,8 @@
 	* [Stacking 示例一（心脏）](nju_software/Stacking_heart.ipynb)
 	* [Stacking 示例二（鸢尾花）](nju_software/Stacking_iris.ipynb)
 * [**最大似然估计（MLE）简介.md**](nju_software/最大似然估计（MLE）简介.md)
+* [**一文了解 EM 算法**](nju_software/一文了解%20EM%20算法.md)
+* [**一文了解 GMM 算法**](nju_software/一文了解%20GMM%20算法.md)
 
 ### **其他资料**
 
