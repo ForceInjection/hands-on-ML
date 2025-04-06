@@ -1,0 +1,3 @@
+[submodule "feature-engineering-book"]
+	path = feature-engineering-book
+	url = git@github.com:alicezheng/feature-engineering-book.git
