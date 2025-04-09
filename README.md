@@ -1,10 +1,6 @@
-# hands-on-ML
+# 动手学机器学习课程
 
-**实践出真知**
-
-## 南京大学软件学院课程
-
-### **第三章 - 监督学习**
+## **第三章 - 监督学习**
 
 * [**动手学机器学习 KNN 算法**](nju_software/ch-03/动手学机器学习%20KNN%20算法.md): [配套代码](nju_software/ch-03/knn.ipynb)
 * [**动手学机器学习决策树算法**](nju_software/ch-03/动手学机器学习决策树算法.md): [配套代码](nju_software/ch-03/decision_tree.ipynb)
@@ -16,7 +12,7 @@
 	- [朴素贝叶斯计算：建筑工人打喷嚏后患感冒的概率](nju_software/ch-03/朴素贝叶斯计算：建筑工人打喷嚏后患感冒的概率.md)
 
 	
-### **第四章 - 集成学习**
+## **第四章 - 集成学习**
 
 * [**动手学机器学习随机森林算法**](nju_software/ch-04/动手学机器学习随机森林算法.md): [配套代码](nju_software/ch-04/random_forest.ipynb)
 * [**一文深入了解机器学习之集成学习**](nju_software/一文深入了解机器学习之集成学习.md)
@@ -27,19 +23,19 @@
 
 动手案例：[**Kaggle 房价预测中的集成技巧：实战与指南**](nju_software/ch-04/Kaggle房价预测中的集成技巧.md)
 
-### **第五章 - 聚类**
+## **第五章 - 聚类**
 
 * [**动手学机器学习 Kmeans 聚类算法**](nju_software/ch-05/动手学机器学习%20Kmeans%20聚类算法.md): [配套代码](nju_software/ch-05/kmeans.ipynb)
 * [**动手学机器学习层次聚类算法**](nju_software/动手学机器学习层次聚类算法.md)
 * [**动手学机器学习：DBSCAN 密度聚类算法**](nju_software/动手学机器学习：DBSCAN%20密度聚类算法.md)
 
-### **第六章 - EM 算法**
+## **第六章 - EM 算法**
 
 * [**最大似然估计（MLE）简介.md**](nju_software/ch-06/最大似然估计（MLE）简介.md)
 * [**一文了解 EM 算法**](nju_software/ch-06/一文了解%20EM%20算法.md)
 * [**一文了解 GMM 算法**](nju_software/ch-06/一文了解%20GMM%20算法.md)
 
-### **第七章 - 特征工程**
+## **第七章 - 特征工程**
 
 * [**精通特征工程: 让数据真正为模型赋能**](nju_software/ch-07/《精通特征工程》：让数据真正为模型赋能.md)
 * [**词袋模型（Bag of Words）介绍**](nju_software/ch-07/词袋模型介绍.md)
@@ -49,18 +45,18 @@
 * [**GBDT特征提取**](nju_software/ch-07/GBDT特征提取.md)：[配套代码](nju_software/ch-07/GBDT.ipynb)
 
 
-### **其他资料**
+## **其他资料**
 
 * [**混淆矩阵评价指标**](nju_software/混淆矩阵评价指标.md)
 * [**数学中希腊字母表**](nju_software/数学中希腊字母表.md)
 
-## Kaggle入门：逻辑回归应用之Kaggle泰坦尼克之灾 
+### Kaggle入门：逻辑回归应用之Kaggle泰坦尼克之灾 
 
 [Kaggle Titanic jupyter notebook](titanic/kaggle_titanic.ipynb)
 
 ## 参考资料
 
-### 《动手学机器学习》
+### 上海交大 -《动手学机器学习》
 ![动手学机器学习](img/hands-on-ml.jpg)
 
 * 第2章 机器学习的数学基础* 第3章 k近邻算法* 第4章 线性回归
@@ -84,4 +80,12 @@
 
 ![精通特征工程](img/feature-engineering.png)
 
-配套代码：`/feature-engineering-book`
+配套代码：[feature-engineering-book](feature-engineering-book/README.md)
+
+### 极客时间 -《零基础实战机器学习》
+
+> [极客时间](https://time.geekbang.org/column/article/420372)
+
+![零基础实战机器学习](img/zero-ml.jpg)
+
+配套代码：[let-us-machine-learning](let-us-machine-learning/README.md)
