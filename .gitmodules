@@ -1,3 +1,6 @@
 [submodule "feature-engineering-book"]
 	path = feature-engineering-book
 	url = git@github.com:alicezheng/feature-engineering-book.git
+[submodule "let-us-machine-learning"]
+	path = let-us-machine-learning
+	url = git@github.com:huangjia2019/let-us-machine-learning.git
