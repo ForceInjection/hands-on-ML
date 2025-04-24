@@ -136,7 +136,7 @@ $$
 * $\sigma^2$ 是类内公共方差；
 * $P(\omega_0)$ 和 $P(\omega_1)$ 为这两个类的先验概率。
 
-## LDA 应用示例
+### LDA 应用示例
 
 我们使用此方程式来研究某一贷款审批示例。概括而言，银行正在决定是批准还是拒绝贷款申请。银行使用两个特征来做出此决策：申请人的信用评分 (x) 和年收入。银行已收集先前贷款申请人的历史数据，以及相关贷款是否已获得批准。
 
@@ -166,51 +166,109 @@ $$
 
 于是，银行可自动运行其贷款审批流程，从而做出更快、更一致的决策，同时最大限度减少人为偏见。
 
-## 线性判别分析的应用
+### 线性判别分析的应用
 
-这些是 LDA 可用于解决复杂问题，并帮助组织做出更好决策的典型场景。
+这些是 `LDA` 可用于解决复杂问题，并帮助组织做出更好决策的典型场景。
 
-金融领域的信用风险评估为了降低风险，金融机构必须识别并最大限度地减少信用违约。LDA 可以通过筛选财务因素和行为数据，帮助从信誉良好的申请人中识别可能拖欠贷款的申请人。
+* **金融领域**的信用风险评估为了降低风险，金融机构必须识别并最大限度地减少信用违约。`LDA` 可以通过筛选财务因素和行为数据，帮助从信誉良好的申请人中识别可能拖欠贷款的申请人。
+* **医疗保健领域**的疾病诊断快速准确的疾病诊断对于实现有效的治疗至关重要。医院和医疗保健提供方必须解读大量医疗数据。`LDA` 可通过识别患者数据中的模式和关系来帮助简化复杂的数据集，同时提高诊断准确性。
+* **电子商务领域**的客户细分为了有效营销，电子商务企业必须能够对不同的客户群进行分类。LDA 在细分客户方面发挥着关键作用，使电子商务公司能够针对不同的客户群体量身定制营销策略。其结果是带来更加个性化的购物体验，提高客户忠诚度和销售额。
+* **制造领域**的质量控制在生产高质量产品的同时最大限度减少缺陷是一项基本挑战。来自机械的传感器数据可与 LDA 一起使用，从而识别与缺陷相关的模式。通过实时检测异常情况，制造商可立即采取纠正措施，从而提高产品质量并减少浪费。
+* **营销领域**的营销活动优化您可通过使用个性化内容来定位对口的受众，从而最大化您的广告预算；然而，要确定相应的受众细分群体却可能十分困难。`LDA` 可通过对客户属性和行为进行分类来简化此流程，从而提升广告活动的定制化程度。此方法可带来更高的投资回报率 (`ROI`) 和更好的客户体验。
 
-医疗保健领域的疾病诊断快速准确的疾病诊断对于实现有效的治疗至关重要。医院和医疗保健提供方必须解读大量医疗数据。LDA 可通过识别患者数据中的模式和关系来帮助简化复杂的数据集，同时提高诊断准确性。
+## LDA 示例
 
-电子商务领域的客户细分为了有效营销，电子商务企业必须能够对不同的客户群进行分类。LDA 在细分客户方面发挥着关键作用，使电子商务公司能够针对不同的客户群体量身定制营销策略。其结果是带来更加个性化的购物体验，提高客户忠诚度和销售额。
-
-制造领域的质量控制在生产高质量产品的同时最大限度减少缺陷是一项基本挑战。来自机械的传感器数据可与 LDA 一起使用，从而识别与缺陷相关的模式。通过实时检测异常情况，制造商可立即采取纠正措施，从而提高产品质量并减少浪费。
-
-营销领域的营销活动优化您可通过使用个性化内容来定位对口的受众，从而最大化您的广告预算；然而，要确定相应的受众细分群体却可能十分困难。LDA 可通过对客户属性和行为进行分类来简化此流程，从而提升广告活动的定制化程度。此方法可带来更高的投资回报率 (ROI) 和更好的客户体验。
-
-要深入了解 Python 的线性判别分析并充分利用 [scikit-learn](https://scikit-learn.org/stable/) 库，可以学习 IBM watsonx 中的教程[使用 Python 和 scikit-learn 学习分类算法](https://developer.ibm.com/tutorials/learn-classification-algorithms-using-python-and-scikit-learn/)。该教程将帮助您掌握使用 Python 和 [scikit-learn](https://scikit-learn.org/stable/)（也称为 sklearn）解决基于分类的机器学习问题的基础知识。
-
-在此分步教程中，您首先需导入必要的 Python 库以处理 Iris 数据集、执行数据预处理，以及创建和评估 LDA 模型：
+导入 `Iris` 数据集、执行数据预处理，以及创建和评估 `LDA` 模型：
 
 ```python
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import sklearn
 import seaborn as sns
-from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.datasets import load_iris
+
+# 加载 Iris 数据集
+iris = load_iris()
+X = iris.data
+y = iris.target
+feature_names = iris.feature_names
+target_names = iris.target_names
+
+# 标准化特征
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# 拆分训练集和测试集
+X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.3, random_state=42, stratify=y)
+
+# 创建 LDA 实例并拟合训练集
+lda = LinearDiscriminantAnalysis(n_components=2)
+X_train_lda = lda.fit_transform(X_train, y_train)
+X_test_lda = lda.transform(X_test)
+
+# 使用 Random Forest 进行分类
+clf = RandomForestClassifier(random_state=42)
+clf.fit(X_train_lda, y_train)
+
+# 预测与评估
+y_pred = clf.predict(X_test_lda)
+acc = accuracy_score(y_test, y_pred)
+cm = confusion_matrix(y_test, y_pred)
+
+print(f"准确率：{acc:.2f}")
+print("混淆矩阵：")
+print(cm)
+
+# 可视化 LDA 转换结果
+plt.figure(figsize=(8, 6))
+for label, marker, color in zip(range(3), ('^', 's', 'o'), ('red', 'green', 'blue')):
+    plt.scatter(X_train_lda[y_train == label, 0],
+                X_train_lda[y_train == label, 1],
+                label=target_names[label],
+                marker=marker,
+                color=color)
+plt.xlabel("LDA Component 1")
+plt.ylabel("LDA Component 2")
+plt.title("LDA: Iris 数据降维可视化")
+plt.legend(loc='best')
+plt.grid(True)
+plt.tight_layout()
+plt.show()
 ```
 
-如果未安装这些库，则可使用 pip install 解决此问题。
+```text
+准确率：0.98
+混淆矩阵：
+[[15  0  0]
+ [ 0 15  0]
+ [ 0  1 14]]
+```
 
-另请参阅此 [scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html#examples-using-sklearn-discriminant-analysis-lineardiscriminantanalysis) 文档以了解有关使用 sklearn.discriminant\_analysis.LinearDiscriminantAnalysis 的 Python 实现的关键参数、属性及一般示例的概述。
+## 使用线性判别分析的优点和缺点
 
-在将线性判别分析 (LDA) 应用于各种分类问题时，了解其优点和局限性至关重要。了解权衡有助于数据科学家和机器学习从业者就其是否适合特定任务做出明智决策。
+在将线性判别分析（`LDA`）应用于各种分类问题时，了解其优点和局限性至关重要。了解这些权衡有助于数据科学家和机器学习从业者判断其是否适用于特定任务。
 
-## 主要优势
 
-*   **计算简单高效：**LDA 是一种简单而强大的算法。它比较容易理解和实现，因此机器学习新手也可以使用。此外，它的高效计算还能确保快速得出结果。
-*   **管理高维数据：**当特征的数量大于训练样本的数量时，LDA 就会很有效。因此，LDA 在文本分析、图像识别和基因组学等应用中非常有价值，因为这些应用中的数据通常都是高维数据。
-*   **处理多重共线性：**LDA 可以处理[多重共线性](https://www.ibm.com/cn-zh/topics/multicollinearity)，即不同特征之间存在高度相关性。它能将数据转换到低维空间，同时保持信息的完整性。
+###主要优势
 
-## 主要缺点
+- **计算简单高效：**  
+  `LDA` 是一种简单而强大的算法。它易于理解和实现，因此对机器学习初学者非常友好。同时，它的计算效率高，能够快速输出结果。
 
-**\- 共享均值分布：**当类分布共享均值时，LDA 会遇到挑战。LDA 努力创造一个新轴，以线性方法将两个类分开。因此，LDA 可能无法有效区分具有重叠统计属性的类。例如，假设两种花的花瓣长度和宽度高度相似，那么 LDA 可能会发现很难仅根据这些特征来区分这些种类。因此，这里优先考虑替代技术，例如非线性判别分析方法。
+- **适用于高维数据：**  
+  当特征数量多于训练样本数量时，`LDA` 依然表现良好。因此，在如文本分析、图像识别、基因组学等高维数据领域中，`LDA` 特别有价值。
 
-**\- 不适用于未标记数据：**LDA 会作为一种监督学习算法来应用；换言之，它会对已标记数据进行分类或分离。相比之下，另一种降维技术“主成分分析 (PCA)”则会忽略类标签并保留方差。
+- **处理多重共线性：**  
+  `LDA` 能够应对特征之间高度相关（共线性）的问题。通过将数据映射到低维空间，`LDA` 能保留尽可能多的判别信息。
+
+### 主要缺点
+
+- **类分布重叠时表现不佳：**  
+  当不同类别的数据具有相似的均值或统计属性时，`LDA` 可能难以将其有效区分。例如，如果两种花的花瓣长度和宽度相似，`LDA` 就很难仅靠这两个特征准确分类。这种情况下，可能更适合使用如核方法等非线性技术。
+
+- **不适用于无监督学习：**  
+  作为监督学习方法，`LDA` 依赖于已有的标签数据来训练模型。相较之下，主成分分析（`PCA`）等无监督降维方法不依赖标签，更适合用于未标记数据。
