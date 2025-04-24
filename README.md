@@ -1,4 +1,5 @@
 # 动手学机器学习
+
 `Show me the code!`
 
 ## 动手学机器学习课程
@@ -51,6 +52,26 @@
 
 * [图解机器学习-模型评估方法与准则](nju_software/ch-08/图解机器学习-模型评估方法与准则.md)
 * [ROC & AUC 计算示例](nju_software/ch-08/roc.ipynb)
+
+### **第九章**
+
+* [聚类下采样介绍](nju_software/ch-09/聚类下采样介绍.md)
+* [使用 GridSearchCV 优化 KNN 模型：超参数调优的实践指南](nju_software/ch-09/gridsearchcv_intro.md)
+	* [示例代码](nju_software/ch-09/gridsearchcv.ipynb)
+* [机器学习模型调优之 L1 与 L2 正则化解析](nju_software/ch-09/L1_L2_intro.md)
+* [SMOTE 介绍](nju_software/ch-09/SMOTE%20介绍.md)
+
+### **第十章**
+
+* [特征选择方法概述](nju_software/ch-10/特征选择方法概述.md)
+	* [示例代码](特征选择概述.ipynb)
+
+### **第十一章**
+
+* [PCA降维算法详解](nju_software/ch-11/PCA降维算法详解.md)
+	* [示例代码](nju_software/ch-11/pca.ipynb)
+* [LDA降维算法详解](nju_software/ch-11/LDA降维算法详解.md)
+	* [示例代码](nju_software/ch-11/lda.ipynb)
 
 ### **其他资料**
 
