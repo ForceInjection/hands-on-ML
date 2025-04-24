@@ -1,4 +1,4 @@
-# 降维算法详解
+# PCA 降维算法详解
 
 引言
 -----------
@@ -309,158 +309,13 @@ $P$ 是协方差矩阵$C$的特征向量单位化后按行排列出的矩阵，�
 
 设有 $m$ 条 $n$ 维数据。
 
-1）将原始数据按列组成 $n$ 行 $m$ 列矩阵 $X$
+* 1）将原始数据按列组成 $n$ 行 $m$ 列矩阵 $X$；
+* 2）将 $X$ 的每一行（代表一个特征）进行零均值化，即减去这一行的均值；
+* 3）求出协方差矩阵 $C=\frac{1}{m}XX^T$；
+* 4）求出协方差矩阵 $C$ 的特征值及对应的特征向量；
+* 5）将特征向量按对应特征值大小从上到下按行排列成矩阵，取前 $k$ 行组成矩阵 $P$；
+* 6） $Y=PX$ 即为降维到 $k$ 维后的数据。
 
-2）将 $X$ 的每一行（代表一个特征）进行零均值化，即减去这一行的均值
+## 8. 代码实践
 
-3）求出协方差矩阵 $C=\frac{1}{m}XX^T$
-
-4）求出协方差矩阵 $C$ 的特征值及对应的特征向量
-
-5）将特征向量按对应特征值大小从上到下按行排列成矩阵，取前 $k$ 行组成矩阵 $P$
-
-6） $Y=PX$ 即为降维到 $k$ 维后的数据
-
-8. PCA 代码实践
----------
-
-我们这里直接使用 python 机器学习工具库 scikit-learn 来给大家演示PCA算法应用（相关知识速查可以查看ShowMeAI文章 [AI建模工具速查|Scikit-learn使用指南](https://www.showmeai.tech/article-detail/108)），sklearn 工具库中与 PCA 相关的类都在 `sklearn.decomposition` 包里，最常用的 PCA 类就是 `sklearn.decomposition.PCA`。
-
-### 1）参数介绍
-
-sklearn 中的 PCA 类使用简单，基本无需调参，一般只需要指定需要降维到的维度，或者降维后的主成分的方差和占原始维度所有特征方差和的比例阈值就可以了。
-
-下面是**sklearn.decomposition.PCA**的主要参数介绍：
-
-*   **n\_components**：PCA 降维后的特征维度数目。
-    
-*   **whiten**：是否进行白化。所谓白化，就是对降维后的数据的每个特征进行归一化，让方差都为 $1$，默认值是False，即不进行白化。
-    
-*   **svd\_solver**：奇异值分解 SVD 的方法，有 $4$ 个可以选择的值：{`auto`,`full`,`arpack`,`randomized`}。
-    
-
-除上述输入参数，还有两个 PCA 类的成员属性也很重要：
-
-* **explained_variance_**，它代表降维后的各主成分的方差值。
-    
-* **explained_variance\_ratio_**，它代表降维后的各主成分的方差值占总方差值的比例。
-    
-
-### 2）代码实例
-
-```python
-## 构建数据样本并可视化
-import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-%matplotlib inline
-from sklearn.datasets import make_blobs
-## X为样本特征，Y为样本簇类别， 共1000个样本，每个样本3个特征，共4个簇
-X, y = make_blobs(n_samples=10000, n_features=3, centers=[[3,3, 3], [0,0,0], [1,1,1], [2,2,2]], cluster_std=[0.2, 0.1, 0.2, 0.2], 
-                  random_state =9)
-fig = plt.figure()
-ax = Axes3D(fig, rect=[0, 0, 1, 1], elev=30, azim=20)
-plt.scatter(X[:, 0], X[:, 1], X[:, 2],marker='x')
-
-```
-
-![Image 158: PCA降维算法; PCA代码实践;](https://img-blog.csdnimg.cn/img_convert/e3510d5b028e06cd546fe5224a0794d8.png)
-
-先不降维，只对数据进行投影，看看投影后的三个维度的方差分布，代码如下：
-
-```python
-from sklearn.decomposition import PCA
-pca = PCA(n_components=3)
-pca.fit(X)
-print(pca.explained_variance_ratio_)
-print(pca.explained_variance_)
-
-```
-
-输出如下：
-
-```text
-[0.983182120.008500370.00831751]
-[3.785216380.032726130.03202212]
-```
-
-可以看出投影后三个特征维度的方差比例大约为 $98.3\%:0.8\%:0.8\%$。投影后第一个特征占了绝大多数的主成分比例。现在我们来进行降维，从三维降到 $2$ 维，代码如下：
-
-```python
-pca = PCA(n_components=2)
-pca.fit(X)
-print(pca.explained_variance_ratio_)
-print(pca.explained_variance_)
-```
-
-输出如下：
-
-```text
-[0.983182120.00850037]
-[3.785216380.03272613]
-```
-
-这个结果其实可以预料，因为上面三个投影后的特征维度的方差分别为：$[3.78521638 \quad 0.03272613]$，投影到二维后选择的肯定是前两个特征，而抛弃第三个特征。为了有个直观的认识，我们看看此时转化后的数据分布，代码如下：
-
-```python
-X_new = pca.transform(X)
-plt.scatter(X_new[:, 0], X_new[:, 1],marker='x')
-plt.show()
-```
-
-![Image 162: PCA降维算法; PCA代码实践;](https://img-blog.csdnimg.cn/img_convert/e7836c7bd57d8e6d221a6ae6da07b816.png)
-
-从上图可以看出，降维后的数据依然清楚可见之前三维图中的 $4$ 个簇。现在我们不直接指定降维的维度，而指定降维后的主成分方差和比例，来试验一下。
-
-```python
-pca = PCA(n_components=0.9)
-pca.fit(X)
-print(pca.explained_variance_ratio_)
-print(pca.explained_variance_)
-print(pca.n_components_)
-```
-
-我们指定了主成分至少占90% $ \%$，输出如下：
-
-```text
-[0.98318212]
-[3.78521638]
-1
-```
-可见只有第一个投影特征被保留。这也很好理解，我们的第一个主成分占投影特征的方差比例高达 $98 \%$。只选择这一个特征维度便可以满足 $90 \%$ 的阈值。我们现在选择阈值 $99 \%$ 看看，代码如下：
-
-```python
-pca = PCA(n_components=0.99)
-pca.fit(X)
-print(pca.explained_variance_ratio_)
-print(pca.explained_variance_)
-print(pca.n_components_)
-```
-
-此时的输出如下：
-
-```text
-[0.983182120.00850037]
-[3.785216380.03272613]
-2
-```
-
-这个结果也很好理解，因为我们第一个主成分占了 $98.3 \%$ 的方差比例，第二个主成分占了 $0.8 \%$ 的方差比例，两者一起可以满足我们的阈值。最后我们看看让MLE算法自己选择降维维度的效果，代码如下：
-
-```python
-pca = PCA(n_components= 'mle',svd_solver='full')
-pca.fit(X)
-print(pca.explained_variance_ratio_)
-print(pca.explained_variance_)
-print(pca.n_components_)
-```
-
-输出结果如下：
-
-```text
-[0.98318212]
-[3.78521638]
-1
-```
-
-可见由于我们的数据的第一个投影特征的方差占比高达 $98.3 \%$，MLE 算法只保留了我们的第一个特征。
+[代码实践](pca.ipynb)
