@@ -73,6 +73,15 @@
 * [LDA降维算法详解](nju_software/ch-11/LDA降维算法详解.md)
 	* [示例代码](nju_software/ch-11/lda.ipynb)
 
+### **第十二章**
+
+* [推荐系统入门](nju_software/ch-12/recommendation_intro.md)
+* [协同过滤推荐算法：原理、实现与分析](nju_software/ch-12/协同过滤推荐算法：原理、实现与分析.md)
+	* [配套代码](nju_software/ch-12/user-cf.ipynb)
+* [基于内容的推荐算法：原理与实践](nju_software/ch-12/基于内容的推荐算法：原理与实践.md)
+* [基于矩阵分解的推荐算法：原理与实践](nju_software/ch-12/基于矩阵分解的推荐算法：原理与实践.md)
+	* [配套代码](nju_software/ch-12/movie-recommendation.ipynb)
+
 ### **其他资料**
 
 * [**混淆矩阵评价指标**](nju_software/混淆矩阵评价指标.md)
