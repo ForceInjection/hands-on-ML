@@ -1,8 +1,14 @@
 # 动手学机器学习
 
-`Show me the code!`
+动手学机器学习！
 
-## 动手学机器学习课程
+## 一、动手学机器学习课程
+
+### **基础概念**
+
+* [**通俗理解机器学习核心概念**](nju_software/通俗理解机器学习核心概念.md)
+* [**混淆矩阵评价指标**](nju_software/混淆矩阵评价指标.md)
+* [**数学中希腊字母表**](nju_software/数学中希腊字母表.md)
 
 ### **第三章 - 监督学习**
 
@@ -81,19 +87,15 @@
 * [基于内容的推荐算法：原理与实践](nju_software/ch-12/基于内容的推荐算法：原理与实践.md)
 * [基于矩阵分解的推荐算法：原理与实践](nju_software/ch-12/基于矩阵分解的推荐算法：原理与实践.md)
 	* [配套代码](nju_software/ch-12/movie-recommendation.ipynb)
-
-### **其他资料**
-
-* [**混淆矩阵评价指标**](nju_software/混淆矩阵评价指标.md)
-* [**数学中希腊字母表**](nju_software/数学中希腊字母表.md)
+* [常见推荐算法对比分析](nju_software/ch-12/常见推荐算法对比分析.md)
 
 ### Kaggle入门：逻辑回归应用之Kaggle泰坦尼克之灾 
 
 [Kaggle Titanic jupyter notebook](titanic/kaggle_titanic.ipynb)
 
-## 参考资料
+## 二、参考资料
 
-### 上海交大 -《动手学机器学习》
+### 1）上海交大 -《动手学机器学习》
 ![动手学机器学习](img/hands-on-ml.jpg)
 
 * 第2章 机器学习的数学基础* 第3章 k近邻算法* 第4章 线性回归
@@ -113,13 +115,13 @@
 > 教学视频：[上海交大张伟楠机器学习课程第1讲：机器学习简介I-哔哩哔哩](https://b23.tv/QkbYWyR)
 
 
-### 《精通特征工程》
+### 2）《精通特征工程》
 
 ![精通特征工程](img/feature-engineering.png)
 
 配套代码：[feature-engineering-book](feature-engineering-book/README.md)
 
-### 极客时间 -《零基础实战机器学习》
+### 3）极客时间 -《零基础实战机器学习》
 
 > [极客时间](https://time.geekbang.org/column/article/420372)
 
