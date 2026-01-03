@@ -235,30 +235,30 @@ X_test = scaler.transform(X_test)
 通过循环遍历不同的 `K` 值，寻找最优的 `K` 值以构建最佳模型，并输出详细的评估报告。
 
 ```python
-# 动态 K 值选择演示
-best_k = 0
-best_score = 0
+# 寻找最优 K 值
+k_range = range(1, 31)
 scores = []
 
-# 遍历 1 到 20 的 K 值
-for k in range(1, 20):
+for k in k_range:
+    # 使用之前划分好的标准化数据
     knn = KNeighborsClassifier(n_neighbors=k)
     knn.fit(X_train, y_train)
-    score = knn.score(X_test, y_test)
-    scores.append(score)
-    if score > best_score:
-        best_score = score
-        best_k = k
-
-print(f'Optimal K: {best_k} (Accuracy: {best_score:.2%})')
+    scores.append(knn.score(X_test, y_test))
 
 # 绘制 K 值与准确率的关系图
 plt.figure(figsize=(10, 6))
-plt.plot(range(1, 20), scores, marker='o')
-plt.title('Accuracy vs. K Value')
-plt.xlabel('K Value')
-plt.ylabel('Accuracy')
+plt.plot(k_range, scores, marker='o', linestyle='-')
+plt.title('K 值与模型准确率的关系', fontsize=14)
+plt.xlabel('K 值', fontsize=12)
+plt.ylabel('测试集准确率', fontsize=12)
+plt.grid(True, linestyle='--', alpha=0.7)
+plt.xticks(k_range)
 plt.show()
+
+# 输出最优 K 值
+best_k = k_range[np.argmax(scores)]
+best_score = max(scores)
+print(f"最优 K 值: {best_k}, 最高准确率: {best_score:.2%}")
 
 # 使用最优 K 值重新训练模型并输出详细报告
 knn_best = KNeighborsClassifier(n_neighbors=best_k)
@@ -307,18 +307,38 @@ knn_best.fit(X_train, y_train)
 # 创建网格数据
 x_min, x_max = X_train[:, 0].min() - 1, X_train[:, 0].max() + 1
 y_min, y_max = X_train[:, 1].min() - 1, X_train[:, 1].max() + 1
-xx, yy = np.meshgrid(np.linspace(x_min, x_max, 200), np.linspace(y_min, y_max, 200))
-Z = knn_best.predict(np.c_[xx.ravel(), yy.ravel()]).reshape(xx.shape)
+xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.02),
+                     np.arange(y_min, y_max, 0.02))
+
+# 预测网格中每个点的类别
+Z = knn_best.predict(np.c_[xx.ravel(), yy.ravel()])
+Z = Z.reshape(xx.shape)
+
+from matplotlib.colors import ListedColormap
+# 定义颜色映射
+cmap_light = ListedColormap(['#FFAAAA', '#AAFFAA', '#AAAAFF'])
+cmap_bold = ListedColormap(['#FF0000', '#00FF00', '#0000FF'])
 
 # 绘制图形
 plt.figure(figsize=(10, 6))
-plt.contourf(xx, yy, Z, alpha=0.4, cmap='viridis')
-sns.scatterplot(x=X_train[:, 0], y=X_train[:, 1], hue=iris.target_names[y_train],
-                palette='Dark2', edgecolor='black', s=80)
-plt.title(f"KNN Decision Boundaries (k={best_k})")
-plt.xlabel(iris.feature_names[0])
-plt.ylabel(iris.feature_names[1])
-plt.legend(title='Species')
+plt.pcolormesh(xx, yy, Z, cmap=cmap_light, alpha=0.5)
+
+# 绘制训练集数据点
+scatter = plt.scatter(X_train[:, 0], X_train[:, 1], c=y_train, 
+                      cmap=cmap_bold, edgecolor='k', s=60, label='Training Data')
+
+plt.xlim(xx.min(), xx.max())
+plt.ylim(yy.min(), yy.max())
+
+# 添加图例
+handles, _ = scatter.legend_elements()
+legend_labels = target_names
+plt.legend(handles, legend_labels, title="Species", loc="upper right")
+
+plt.title(f"KNN Decision Boundaries (K={best_k})", fontsize=16)
+plt.xlabel(feature_names[0], fontsize=12)
+plt.ylabel(feature_names[1], fontsize=12)
+
 plt.show()
 ```
 
@@ -332,13 +352,116 @@ plt.show()
 
 随着特征维度的增加，数据在高维空间中变得稀疏，计算距离时会受到大量无关特征的干扰，导致“维度灾难”。为此，可采用 `PCA` 降维，保留数据中 **90%** 的方差，降低特征维度；或利用互信息法进行特征选择，筛选出与目标变量相关性最高的特征，减轻维度对 `KNN` 算法性能的影响。
 
+```python
+from sklearn.decomposition import PCA
+
+# 重新加载完整数据
+X_full = iris.data
+y_full = iris.target
+
+# 标准化 (PCA 前必须标准化)
+X_full_scaled = StandardScaler().fit_transform(X_full)
+
+# 使用 PCA 降维到 2 维
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X_full_scaled)
+
+print(f"原始特征维度: {X_full.shape[1]}")
+print(f"降维后特征维度: {X_pca.shape[1]}")
+print(f"保留的方差比例: {pca.explained_variance_ratio_}")
+print(f"总信息保留率: {sum(pca.explained_variance_ratio_):.2%}")
+
+# 可视化降维后的数据
+plt.figure(figsize=(10, 6))
+scatter = plt.scatter(X_pca[:, 0], X_pca[:, 1], c=y_full, cmap='viridis', edgecolor='k', s=70, alpha=0.8)
+plt.title('PCA 降维后的鸢尾花数据分布 (2D)', fontsize=14)
+plt.xlabel(f'PC1 ({pca.explained_variance_ratio_[0]:.2%} Variance)', fontsize=12)
+plt.ylabel(f'PC2 ({pca.explained_variance_ratio_[1]:.2%} Variance)', fontsize=12)
+plt.legend(handles=scatter.legend_elements()[0], labels=iris.target_names.tolist(), title="Species")
+plt.grid(True, linestyle='--', alpha=0.5)
+plt.show()
+```
+
 ### 6.2 效率提升方案
 
 当数据量较大时，为提升 `KNN` 算法的查询效率，可以采用 `KD-Tree` 数据结构。一般而言，在**低维**场景下，`KD-Tree` 的查询复杂度通常可近似为 $O(\log n)$（最坏情况可能退化到 $O(n)$），并且构建树的复杂度常见为 $O(n \log n)$。此外，也可使用近似最近邻（`LSH` 哈希）方法，在牺牲少量精度的前提下，大幅提升大规模数据的查询速度。
 
+```python
+import time
+from sklearn.datasets import make_classification
+
+# 生成一个较大的模拟数据集 (10000 样本, 20 特征)
+print("生成模拟数据集 (10000 样本, 20 特征)...")
+X_large, y_large = make_classification(n_samples=10000, n_features=20, random_state=42)
+
+# 1. Brute Force (蛮力搜索)
+start_time = time.time()
+knn_brute = KNeighborsClassifier(n_neighbors=5, algorithm='brute')
+knn_brute.fit(X_large, y_large)
+# 预测 1000 个样本
+_ = knn_brute.predict(X_large[:1000])
+time_brute = time.time() - start_time
+print(f"Brute Force 耗时: {time_brute:.4f} 秒")
+
+# 2. KD-Tree
+start_time = time.time()
+knn_kdtree = KNeighborsClassifier(n_neighbors=5, algorithm='kd_tree')
+knn_kdtree.fit(X_large, y_large)
+# 预测 1000 个样本
+_ = knn_kdtree.predict(X_large[:1000])
+time_kdtree = time.time() - start_time
+print(f"KD-Tree 耗时: {time_kdtree:.4f} 秒")
+
+print(f"KD-Tree 速度提升倍数: {time_brute / time_kdtree:.2f} 倍")
+```
+
 ### 6.3 样本不平衡处理
 
 在实际数据中，若不同类别样本数量差异悬殊，普通 `KNN` 算法的预测结果会偏向样本数量多的类别。此时，可通过加权投票的方式，赋予距离近的邻居更高的权重；或采用 `SMOTE` 过采样技术，合成少数类样本，平衡数据集类别分布，提升模型对少数类的识别能力。
+
+```python
+from sklearn.utils import resample
+from collections import Counter
+
+# 1. 构造一个不平衡的数据集
+# 移除大部分 setosa (class 0) 样本，只保留前 10 个
+X_imb = np.concatenate([X_full[:10], X_full[50:]])
+y_imb = np.concatenate([y_full[:10], y_full[50:]])
+
+print("原始不平衡数据集分布:", Counter(y_imb))
+
+# 2. 使用 sklearn.utils.resample 进行过采样
+# 分离多数类和少数类
+X_minority = X_imb[y_imb == 0]
+y_minority = y_imb[y_imb == 0]
+X_majority = X_imb[y_imb != 0]
+y_majority = y_imb[y_imb != 0]
+
+# 对少数类进行过采样，使其数量与多数类一致 (50)
+X_minority_upsampled, y_minority_upsampled = resample(X_minority, y_minority,
+                                                      replace=True,     # 允许重复采样
+                                                      n_samples=50,    # 采样到 50 个样本
+                                                      random_state=42) # 保证结果可复现
+
+# 合并数据
+X_res = np.vstack((X_majority, X_minority_upsampled))
+y_res = np.hstack((y_majority, y_minority_upsampled))
+
+print("过采样处理后数据集分布:", Counter(y_res))
+
+# 3. 可视化对比 (取前两个特征)
+plt.figure(figsize=(12, 5))
+
+plt.subplot(1, 2, 1)
+plt.scatter(X_imb[:, 0], X_imb[:, 1], c=y_imb, cmap='viridis', edgecolor='k', alpha=0.7)
+plt.title(f'不平衡数据 (Setosa={Counter(y_imb)[0]})')
+
+plt.subplot(1, 2, 2)
+plt.scatter(X_res[:, 0], X_res[:, 1], c=y_res, cmap='viridis', edgecolor='k', alpha=0.7)
+plt.title(f'随机过采样增强数据 (Setosa={Counter(y_res)[0]})')
+
+plt.show()
+```
 
 ---
 
