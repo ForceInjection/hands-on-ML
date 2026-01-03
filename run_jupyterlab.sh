@@ -62,6 +62,8 @@ else
     docker run -d \
         -p $PORT:8888 \
         -v "$WORK_DIR":/home/jovyan/work \
+        -v "$WORK_DIR/fonts":/usr/share/fonts/truetype/custom_fonts:ro \
+        -v "$WORK_DIR/config/matplotlibrc":/home/jovyan/.config/matplotlib/matplotlibrc:ro \
         --name $CONTAINER_NAME \
         $IMAGE_NAME
         
@@ -71,7 +73,13 @@ else
     fi
 fi
 
-# 3. Retrieve Token and Show URL
+# 3. Refresh Font Cache
+log_info "Refreshing font cache (this may take a few seconds)..."
+docker exec -u 0 $CONTAINER_NAME fc-cache -fv > /dev/null 2>&1
+# Clear matplotlib cache to force rebuild of font list
+docker exec $CONTAINER_NAME rm -rf /home/jovyan/.cache/matplotlib
+
+# 4. Retrieve Token and Show URL
 log_info "Retrieving connection information..."
 log_info "Waiting for JupyterLab to initialize (this may take up to 30s)..."
 
