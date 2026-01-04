@@ -25,20 +25,37 @@ log_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
-# 1. Check if Docker is running
+# 1. Check arguments
+FORCE_BUILD=false
+if [[ "$1" == "--build" ]]; then
+    FORCE_BUILD=true
+    log_info "Force build mode enabled."
+fi
+
+# 2. Check if Docker is running
 if ! docker info > /dev/null 2>&1; then
     log_error "Docker is not running. Please start Docker Desktop/Engine."
     exit 1
 fi
 
 # 2. Check Container Status
+if [ "$FORCE_BUILD" = true ]; then
+    log_info "Force build requested. Stopping and removing existing container..."
+    docker stop $CONTAINER_NAME > /dev/null 2>&1
+    docker rm $CONTAINER_NAME > /dev/null 2>&1
+fi
+
 log_info "Checking container status for '$CONTAINER_NAME'..."
 
 # Get container status (running, exited, or empty if not exists)
 CONTAINER_STATUS=$(docker inspect --format "{{.State.Status}}" $CONTAINER_NAME 2>/dev/null)
 
 if [ "$CONTAINER_STATUS" == "running" ]; then
-    log_info "Container is already running."
+    if [ "$FORCE_BUILD" = true ]; then
+        log_warn "Container is running but force build requested. This should not happen (logic error)."
+    else
+        log_info "Container is already running."
+    fi
     
 elif [ "$CONTAINER_STATUS" == "exited" ] || [ "$CONTAINER_STATUS" == "created" ]; then
     log_info "Container exists but is stopped (Status: $CONTAINER_STATUS)."
@@ -53,8 +70,13 @@ else
     log_info "Container does not exist. Creating and starting..."
     
     # Check/Build image
-    if [[ "$(docker images -q $IMAGE_NAME 2> /dev/null)" == "" ]]; then
-        log_info "Building custom Docker image $IMAGE_NAME (this may take a while)..."
+    if [[ "$(docker images -q $IMAGE_NAME 2> /dev/null)" == "" ]] || [ "$FORCE_BUILD" = true ]; then
+        if [ "$FORCE_BUILD" = true ]; then
+             log_info "Forcing image rebuild..."
+        else
+             log_info "Image not found. Building custom Docker image $IMAGE_NAME..."
+        fi
+        
         if [ ! -f "Dockerfile" ]; then
              log_error "Dockerfile not found. Cannot build custom image."
              exit 1
@@ -78,7 +100,7 @@ else
 fi
 
 # 3. Refresh Font Cache
-log_info "Refreshing font cache (this may take a few seconds)..."
+log_info "Refreshing font cache... this may take a few seconds"
 docker exec -u 0 $CONTAINER_NAME fc-cache -fv > /dev/null 2>&1
 # Clear matplotlib cache to force rebuild of font list
 docker exec $CONTAINER_NAME rm -rf /home/jovyan/.cache/matplotlib
