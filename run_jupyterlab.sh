@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Configuration
-IMAGE_NAME="jupyter/scipy-notebook:latest"
+IMAGE_NAME="hands-on-ml-custom:v3"
 CONTAINER_NAME="my-jupyter-lab"
 PORT=8888
 # Mount the current directory to /home/jovyan/work
@@ -52,10 +52,14 @@ elif [ "$CONTAINER_STATUS" == "exited" ] || [ "$CONTAINER_STATUS" == "created" ]
 else
     log_info "Container does not exist. Creating and starting..."
     
-    # Check/Pull image
+    # Check/Build image
     if [[ "$(docker images -q $IMAGE_NAME 2> /dev/null)" == "" ]]; then
-        log_info "Pulling Docker image $IMAGE_NAME (this may take a while)..."
-        docker pull $IMAGE_NAME
+        log_info "Building custom Docker image $IMAGE_NAME (this may take a while)..."
+        if [ ! -f "Dockerfile" ]; then
+             log_error "Dockerfile not found. Cannot build custom image."
+             exit 1
+        fi
+        docker build -t $IMAGE_NAME .
     fi
     
     # Run container
