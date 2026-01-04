@@ -1,6 +1,6 @@
 # Stacking 算法实战指南
 
-本文档旨在作为《[一文深入了解机器学习之集成学习](./一文深入了解机器学习之集成学习.md)》的深度实战补充，专注于 Stacking 算法的工程实现与细节落地。我们将跳出简单的 API 调用，深入解析 `mlxtend` 库背后的数据流转逻辑，并通过两个经典案例展示如何构建无偏的元特征以及有效地组合异构模型。
+本文档旨在作为《[01_集成学习综述](./01_集成学习综述.md)》的深度实战补充，专注于 Stacking 算法的工程实现与细节落地。我们将跳出简单的 API 调用，深入解析 `mlxtend` 库背后的数据流转逻辑，并通过两个经典案例展示如何构建无偏的元特征以及有效地组合异构模型。
 
 文档结构包含四部分：
 
@@ -35,7 +35,7 @@ Stacking 的本质是**学习“如何利用基模型的预测值”**。但在�
 
 本案例演示如何结合 KNN、随机森林和朴素贝叶斯三个差异较大的基学习器，构建一个强大的 Stacking 分类器。
 
-**对应 Notebook**: [Stacking_iris.ipynb](./Stacking_iris.ipynb)
+**对应 Notebook**: [05_Stacking_实战_Iris.ipynb](./05_Stacking_实战_Iris.ipynb)
 
 ### 2.1 核心代码解析
 
@@ -91,7 +91,7 @@ for clf, label in zip([clf1, clf2, clf3, sclf],
 
 本案例展示了在真实医疗数据集中，如何进行数据预处理并应用 Stacking 提升预测准确率。
 
-**对应 Notebook**: [Stacking_heart.ipynb](./Stacking_heart.ipynb)
+**对应 Notebook**: [05_Stacking_实战_Heart.ipynb](./05_Stacking_实战_Heart.ipynb)
 
 ### 3.1 数据预处理的重要性
 
