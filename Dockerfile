@@ -36,4 +36,7 @@ RUN pip install --no-cache-dir --upgrade pip -i https://mirrors.aliyun.com/pypi/
     'numba' \
     'lightgbm' \
     'xgboost' \
-    'mlxtend'
+    'mlxtend' \
+    'nltk' \
+    'shap' \
+    'gensim'
