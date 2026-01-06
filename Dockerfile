@@ -40,3 +40,8 @@ RUN pip install --no-cache-dir --upgrade pip -i https://mirrors.aliyun.com/pypi/
     'nltk' \
     'shap' \
     'gensim'
+
+# 安装 imbalanced-learn
+# 阿里云镜像源可能存在同步延迟，改用清华源以避免连接 pypi.org 超时
+RUN pip install -U \
+    'imbalanced-learn'
