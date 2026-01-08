@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Configuration
-IMAGE_NAME="hands-on-ml-custom:v3"
+IMAGE_NAME="hands-on-ml-custom:v1"
 CONTAINER_NAME="my-jupyter-lab"
 PORT=8888
 # Mount the current directory to /home/jovyan/work
@@ -27,9 +27,54 @@ log_error() {
 
 # 1. Check arguments
 FORCE_BUILD=false
-if [[ "$1" == "--build" ]]; then
-    FORCE_BUILD=true
-    log_info "Force build mode enabled."
+DOCKERFILE="Dockerfile"
+USE_SURPRISE=false
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --build)
+            FORCE_BUILD=true
+            log_info "Force build mode enabled."
+            shift # past argument
+            ;;
+        --surprise)
+            USE_SURPRISE=true
+            shift # past argument
+            ;;
+        --surprise=*)
+            SURPRISE_VALUE="${1#*=}"
+            if [[ "$SURPRISE_VALUE" == "true" || "$SURPRISE_VALUE" == "1" || "$SURPRISE_VALUE" == "yes" ]]; then
+                USE_SURPRISE=true
+            elif [[ "$SURPRISE_VALUE" == "false" || "$SURPRISE_VALUE" == "0" || "$SURPRISE_VALUE" == "no" ]]; then
+                USE_SURPRISE=false
+            else
+                log_error "Invalid value for --surprise: $SURPRISE_VALUE (expected true/false)"
+                exit 1
+            fi
+            shift # past argument
+            ;;
+        -f|--file)
+            DOCKERFILE="$2"
+            log_info "Using Dockerfile: $DOCKERFILE"
+            shift # past argument
+            shift # past value
+            ;;
+        *)
+            shift # past argument
+            ;;
+    esac
+done
+
+# Adjust Dockerfile based on surprise flag
+if [ "$USE_SURPRISE" = true ]; then
+    DOCKERFILE="Dockerfile_surprise"
+    log_info "Surprise mode enabled. Using Dockerfile: $DOCKERFILE"
+fi
+
+# Adjust configuration based on Dockerfile
+if [[ "$DOCKERFILE" == *"Dockerfile_surprise"* ]]; then
+    IMAGE_NAME="hands-on-ml-surprise:v1"
+    log_info "Switched to Surprise configuration: Image=$IMAGE_NAME, Container=$CONTAINER_NAME"
 fi
 
 # 2. Check if Docker is running
@@ -49,6 +94,14 @@ log_info "Checking container status for '$CONTAINER_NAME'..."
 
 # Get container status (running, exited, or empty if not exists)
 CONTAINER_STATUS=$(docker inspect --format "{{.State.Status}}" $CONTAINER_NAME 2>/dev/null)
+CURRENT_IMAGE=$(docker inspect --format "{{.Config.Image}}" $CONTAINER_NAME 2>/dev/null)
+
+if [ -n "$CURRENT_IMAGE" ] && [ "$CURRENT_IMAGE" != "$IMAGE_NAME" ]; then
+    log_info "Container image mismatch (current=$CURRENT_IMAGE, desired=$IMAGE_NAME). Recreating..."
+    docker stop $CONTAINER_NAME > /dev/null 2>&1
+    docker rm $CONTAINER_NAME > /dev/null 2>&1
+    CONTAINER_STATUS=""
+fi
 
 if [ "$CONTAINER_STATUS" == "running" ]; then
     if [ "$FORCE_BUILD" = true ]; then
@@ -77,11 +130,16 @@ else
              log_info "Image not found. Building custom Docker image $IMAGE_NAME..."
         fi
         
-        if [ ! -f "Dockerfile" ]; then
-             log_error "Dockerfile not found. Cannot build custom image."
+        if [ ! -f "$DOCKERFILE" ]; then
+             log_error "$DOCKERFILE not found. Cannot build custom image."
              exit 1
         fi
-        docker build -t $IMAGE_NAME .
+        docker build -f "$DOCKERFILE" -t $IMAGE_NAME .
+        
+        if [ $? -ne 0 ]; then
+            log_error "Docker build failed. Aborting."
+            exit 1
+        fi
     fi
     
     # Run container

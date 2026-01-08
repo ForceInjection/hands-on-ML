@@ -18,13 +18,14 @@ RUN sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list && 
 USER jovyan
 
 # 安装 Python 库
-# 使用阿里云 PyPI 镜像源
-# 强制重装核心库以确保与 NumPy 2.x 的二进制兼容性
+# 显式指定 numpy<2.0.0 以支持 scikit-surprise
+# 强制重装核心库以确保与 NumPy 1.x 的二进制兼容性
+# 改用腾讯源以提高稳定性
 RUN pip install --no-cache-dir --upgrade pip -i https://mirrors.cloud.tencent.com/pypi/simple && \
     pip install --no-cache-dir -i https://mirrors.cloud.tencent.com/pypi/simple \
     --force-reinstall \
     'jupyterlab' \
-    'numpy' \
+    'numpy<2.0.0' \
     'pandas' \
     'scipy' \
     'scikit-learn' \
@@ -39,4 +40,5 @@ RUN pip install --no-cache-dir --upgrade pip -i https://mirrors.cloud.tencent.co
     'nltk' \
     'shap' \
     'gensim' \
+    'scikit-surprise' \
     'imbalanced-learn'
