@@ -53,11 +53,6 @@
 - [**动手学机器学习决策树算法**](nju_software/ch-03/05_动手学机器学习决策树算法.md) | [配套代码](nju_software/ch-03/05_decision_tree.ipynb)
 - [**动手学机器学习支持向量机算法**](nju_software/ch-03/06_动手学机器学习支持向量机算法.md) | [配套代码](nju_software/ch-03/06_svm.ipynb)
 
-**实战案例：**
-
-- [使用决策树对泰坦尼克号幸存者数据进行分类](nju_software/ch-03/练习/练习一：使用决策树对泰坦尼克号幸存者数据进行分类.md) | [配套代码](titanic/decistion_tree.ipynb)
-- [朴素贝叶斯计算示例：建筑工人打喷嚏后患感冒的概率](nju_software/ch-03/04_动手学机器学习朴素贝叶斯算法.md)
-
 **上海交大配套资源：**
 
 - [第 3 章 k 近邻算法](sjtu-hands-on-ML/第3章%20k近邻算法/) | [习题解答](sjtu-hands-on-ML/第3章%20k近邻算法/章节习题解答/)
@@ -212,23 +207,9 @@
 
 ---
 
-## 3. 实战项目
+## 3. 参考资料
 
-### 3.1 Kaggle 竞赛实战
-
-- [Kaggle Titanic 泰坦尼克之灾](titanic/kaggle_titanic.ipynb) - 逻辑回归应用实战
-- [房价预测项目](house/train.csv) - 详见 [ch-04 综合案例](nju_software/ch-04/06_综合案例_Kaggle房价预测/06_综合案例_Kaggle房价预测.ipynb)
-
-### 3.2 业务场景实战
-
-- [用户画像与 RFM 分析](nju_software/ch-07/RFM/数据探索-根据历史订单信息求RFM值.md) - 电商用户价值分析
-- [推荐系统实战](nju_software/ch-12/) - 电影推荐系统构建
-
----
-
-## 4. 参考资料
-
-### 4.1 上海交大《动手学机器学习》
+### 3.1 上海交大《动手学机器学习》
 
 ![动手学机器学习](img/hands-on-ml.jpg)
 
@@ -236,13 +217,13 @@
 
 [教学视频：上海交大张伟楠机器学习课程](https://b23.tv/QkbYWyR)
 
-### 4.2 《精通特征工程》
+### 3.2 《精通特征工程》
 
 ![精通特征工程](img/feature-engineering.png)
 
 [配套代码](feature-engineering-book/)
 
-### 4.3 极客时间《零基础实战机器学习》
+### 3.3 极客时间《零基础实战机器学习》
 
 ![零基础实战机器学习](img/zero-ml.jpg)
 
@@ -250,9 +231,9 @@
 
 ---
 
-## 5. 环境配置
+## 4. 环境配置
 
-### 5.1 Docker 一键启动（推荐）
+### 4.1 Docker 一键启动（推荐）
 
 本仓库提供了基于 Docker 的 JupyterLab 启动脚本 [run_jupyterlab.sh](run_jupyterlab.sh)。脚本会在本地创建并启动容器，将当前仓库目录挂载到容器的工作目录，启动成功后输出可直接访问的 URL（包含 token）。
 
@@ -276,10 +257,10 @@ bash run_jupyterlab.sh --build
 
 镜像构建逻辑与依赖清单见 [Dockerfile](Dockerfile)。
 
-### 5.2 本地安装 JupyterLab
+### 4.2 本地安装 JupyterLab
 
 如需在本地（非 Docker）安装与使用 JupyterLab，请参考 [jupyterlab_installation.md](jupyterlab_installation.md)。
 
-### 5.3 依赖说明
+### 4.3 依赖说明
 
 本仓库的 Docker 环境基于 `jupyter/scipy-notebook:python-3.11`，并通过 [Dockerfile](Dockerfile) 安装常用数据科学库（例如 NumPy、Pandas、scikit-learn、Matplotlib）以及部分扩展库（例如 LightGBM、XGBoost 等）。如需复现依赖版本，以 [Dockerfile](Dockerfile) 为准。
