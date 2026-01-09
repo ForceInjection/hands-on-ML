@@ -233,34 +233,46 @@
 
 ## 4. 环境配置
 
+本节介绍如何快速搭建可复现的 JupyterLab 环境，优先推荐使用 Docker 启动。
+
 ### 4.1 Docker 一键启动（推荐）
 
-本仓库提供了基于 Docker 的 JupyterLab 启动脚本 [run_jupyterlab.sh](run_jupyterlab.sh)。脚本会在本地创建并启动容器，将当前仓库目录挂载到容器的工作目录，启动成功后输出可直接访问的 URL（包含 token）。
+本仓库提供了基于 Docker 的 JupyterLab 启动脚本 [run_jupyterlab.sh](run_jupyterlab.sh)。脚本会在本地构建镜像并创建容器，默认将宿主机 `127.0.0.1:8888` 映射到容器端口 `8888`，将当前仓库目录挂载到容器的工作目录（`/home/jovyan/work`），并额外挂载 `./fonts` 与 `./config/matplotlibrc` 以改善中文字体与 Matplotlib 配置的可用性。启动成功后会输出可直接访问的 URL（包含 token）。
 
-前置条件：
+**前置条件**：
 
 - 已安装并启动 Docker
 
-启动方式：
+**启动方式**：
 
 ```bash
 # 在仓库根目录执行
 bash run_jupyterlab.sh
 ```
 
-如需强制重建镜像：
+**如需强制重建镜像**：
 
 ```bash
-# --build 会停止并删除现有容器，然后基于 Dockerfile 重建镜像
+# --build 会停止并删除现有容器，然后基于所选 Dockerfile 重建镜像
 bash run_jupyterlab.sh --build
 ```
 
-镜像构建逻辑与依赖清单见 [Dockerfile](Dockerfile)。
+**镜像选择与依赖策略**：
+
+- 默认使用 [Dockerfile](Dockerfile) 构建镜像，不显式锁定版本，构建时由 pip 自动选择并安装较新的依赖版本；
+- 如需使用 `scikit-surprise`，请使用 [Dockerfile_surprise](Dockerfile_surprise) 构建镜像，该环境会显式约束 `numpy<2.0.0` 以保证兼容性。
+
+如需启用 `scikit-surprise`（也支持 `--surprise=true/false`）：
+
+```bash
+# 使用 Dockerfile_surprise 构建镜像并启动
+bash run_jupyterlab.sh --surprise
+```
+
+镜像构建逻辑与完整依赖清单见 [Dockerfile](Dockerfile) 与 [Dockerfile_surprise](Dockerfile_surprise)。
 
 ### 4.2 本地安装 JupyterLab
 
 如需在本地（非 Docker）安装与使用 JupyterLab，请参考 [jupyterlab_installation.md](jupyterlab_installation.md)。
 
-### 4.3 依赖说明
-
-本仓库的 Docker 环境基于 `jupyter/scipy-notebook:python-3.11`，并通过 [Dockerfile](Dockerfile) 安装常用数据科学库（例如 NumPy、Pandas、scikit-learn、Matplotlib）以及部分扩展库（例如 LightGBM、XGBoost 等）。如需复现依赖版本，以 [Dockerfile](Dockerfile) 为准。
+---

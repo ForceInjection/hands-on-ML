@@ -53,12 +53,6 @@ while [[ $# -gt 0 ]]; do
             fi
             shift # past argument
             ;;
-        -f|--file)
-            DOCKERFILE="$2"
-            log_info "Using Dockerfile: $DOCKERFILE"
-            shift # past argument
-            shift # past value
-            ;;
         *)
             shift # past argument
             ;;
