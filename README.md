@@ -162,14 +162,14 @@
 
 **理论学习：**
 
-- [推荐系统入门](nju_software/ch-12/recommendation_intro.md)
-- [协同过滤推荐算法：原理、实现与分析](nju_software/ch-12/协同过滤推荐算法：原理、实现与分析.md) | [配套代码](nju_software/ch-12/user-cf.ipynb)
-- [基于内容的推荐算法：原理与实践](nju_software/ch-12/基于内容的推荐算法：原理与实践.md)
-- [一文读懂 SVD 推荐算法：矩阵分解的直观解释与示例](nju_software/ch-12/一文读懂%20SVD%20推荐算法：矩阵分解的直观解释与示例.md)
-- [基于矩阵分解的推荐算法：原理与实践](nju_software/ch-12/基于矩阵分解的推荐算法：原理与实践.md) | [配套代码](nju_software/ch-12/movie-recommendation.ipynb)
-- [理解推荐系统中的 Embedding 表示](nju_software/ch-12/理解推荐系统中的%20Embedding%20表示.md)
-- [常见推荐算法对比分析](nju_software/ch-12/常见推荐算法对比分析.md)
-- [使用 Apriori 算法进行关联分析：原理与示例](nju_software/ch-12/使用%20Apriori%20算法进行关联分析：原理与示例.md)
+- [推荐系统入门](nju_software/ch-12/01_推荐系统综述.md)
+- [协同过滤推荐算法：原理、实现与分析](nju_software/ch-12/04_协同过滤.md) | [配套代码](nju_software/ch-12/04_协同过滤.ipynb)
+- [基于内容的推荐算法：原理与实践](nju_software/ch-12/03_基于内容的推荐.md)
+- [一文读懂 SVD 推荐算法：矩阵分解的直观解释与示例](nju_software/ch-12/05_矩阵分解_SVD.md)
+- [基于矩阵分解的推荐算法：原理与实践](nju_software/ch-12/05_矩阵分解_SVD.md) | [配套代码](nju_software/ch-12/综合案例_电影推荐/综合案例_电影推荐.ipynb)
+- [理解推荐系统中的 Embedding 表示](nju_software/ch-12/06_Embedding表示.md)
+- [常见推荐算法对比分析](nju_software/ch-12/07_算法对比分析.md)
+- [使用 Apriori 算法进行关联分析：原理与示例](nju_software/ch-12/02_关联规则_Apriori.md)
 
 ### 2.8 概率图模型
 
@@ -177,12 +177,12 @@
 
 **理论学习：**
 
-- [贝叶斯垃圾邮件过滤器](nju_software/ch-13/贝叶斯垃圾邮件过滤器.md)
-- [贝叶斯网络经典例子](nju_software/ch-13/贝叶斯网络经典例子.md)
-- [一文读懂贝叶斯网络](nju_software/ch-13/一文读懂贝叶斯网络.md)
-- [马尔可夫模型简介](nju_software/ch-13/马尔可夫模型简介.md)
-- [你看不见天气，但能看到穿衣：隐马尔可夫模型的典型例子](nju_software/ch-13/你看不见天气，但能看到穿衣：隐马尔可夫模型的典型例子.md)
-- [一文读懂隐马尔可夫模型（HMM）](nju_software/ch-13/一文读懂隐马尔可夫模型（HMM）.md)
+- [贝叶斯垃圾邮件过滤器](nju_software/ch-13/04_贝叶斯垃圾邮件过滤器.md)
+- [贝叶斯网络经典例子](nju_software/ch-13/06_贝叶斯网络经典例子.md)
+- [一文读懂贝叶斯网络](nju_software/ch-13/05_一文读懂贝叶斯网络.md)
+- [马尔可夫模型简介](nju_software/ch-13/01_马尔可夫模型简介.md)
+- [你看不见天气，但能看到穿衣：隐马尔可夫模型的典型例子](nju_software/ch-13/02_你看不见天气，但能看到穿衣：隐马尔可夫模型的典型例子.md)
+- [一文读懂隐马尔可夫模型（HMM）](nju_software/ch-13/03_一文读懂隐马尔可夫模型（HMM）.md)
 
 **上海交大配套资源：**
 
