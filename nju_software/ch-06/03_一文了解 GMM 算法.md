@@ -85,7 +85,7 @@ $$
 
 - **更新协方差矩阵**：
   $$
-  \Sigma_k^{new} = \frac{1}{N_k} \sum_{i=1}^{N} \gamma(z_{ik}) (x_i - \mu_k^{new})(x_i - \mu_k^{new})^T
+  \Sigma_k^{new} = \frac{1}{N_k} \sum_{i=1}^{N} \gamma(z_{ik}) (x_i - \mu_k^{new})(x_i - \mu_k^{new})^\top
   $$
 
 ### 2.4 迭代与收敛

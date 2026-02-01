@@ -66,19 +66,19 @@ $$
 从线性代数的角度，任意一个 $m \times n$ 的实矩阵 $R$ 都可以分解为三个矩阵的乘积：
 
 $$
-R = U \Sigma V^T
+R = U \Sigma V^\top
 $$
 
 其中：
 
 - $U$: $m \times m$ 的正交矩阵，列向量称为左奇异向量。
 - $\Sigma$: $m \times n$ 的对角矩阵，对角线元素为奇异值，按降序排列。
-- $V^T$: $n \times n$ 的正交矩阵，列向量称为右奇异向量。
+- $V^\top$: $n \times n$ 的正交矩阵，列向量称为右奇异向量。
 
 在推荐系统中，如果我们取前 $k$ 个最大的奇异值，可以将 $R$ 近似为：
 
 $$
-R \approx U_k \Sigma_k V_k^T
+R \approx U_k \Sigma_k V_k^\top
 $$
 
 这本质上是一种**降维 (Dimensionality Reduction)** 技术。
@@ -171,7 +171,7 @@ BiasSVD 仅利用了显式评分 (Explicit Feedback)。实际上，用户的浏�
 SVD++ 引入了 $y_j$ 向量，表示用户有过交互的物品 $j$ 对用户兴趣的贡献：
 
 $$
-\hat{r}_{ui} = \mu + b_u + b_i + q_i^T (p_u + |N(u)|^{-\frac{1}{2}} \sum_{j \in N(u)} y_j)
+\hat{r}_{ui} = \mu + b_u + b_i + q_i^\top (p_u + |N(u)|^{-\frac{1}{2}} \sum_{j \in N(u)} y_j)
 $$
 
 - $N(u)$: 用户 $u$ 有过交互的物品集合。

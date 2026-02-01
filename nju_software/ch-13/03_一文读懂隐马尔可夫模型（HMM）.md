@@ -87,7 +87,7 @@ $$
 \lambda = (S, O, A, B, \pi)
 $$
 
-为避免符号混淆，本文用 $S$ 与 $O$ 表示“状态集合/观测集合”，用 $S_t$ 与 $O_t$ 表示“时刻 $t$ 的状态/观测随机变量”，用 $\mathbf{O}$ 表示一段具体的观测序列。
+为避免符号混淆，本文用 $S$ 与 $O$ 表示“状态集合/观测集合”，用 $S_t$ 与 $O_t$ 表示“时刻 $t$ 的状态/观测随机变量”，用 $\boldsymbol{O}$ 表示一段具体的观测序列。
 
 下表列出了各参数的数学定义与物理含义：
 
@@ -101,7 +101,7 @@ $$
 
 > 注：
 >
-> - 实际**观测序列**记作 $\mathbf{O} = (O_1, O_2, ..., O_T)$，是从 $O$ 中取出的时序序列。
+> - 实际**观测序列**记作 $\boldsymbol{O} = (O_1, O_2, ..., O_T)$，是从 $O$ 中取出的时序序列。
 > - 上述定义基于**离散观测 HMM**；在连续观测场景中，$B$ 通常使用概率密度函数（如高斯分布）替代离散概率表。
 
 ### 2.1 参数的可视化示例
@@ -163,7 +163,7 @@ HMM 的建模能力依赖于对**双重不确定性**的刻画：
 ### 3.1 评估问题（Evaluation）
 
 > **问题定义**
-> 给定模型 $\lambda = (A, B, \pi)$ 和观测序列 $\mathbf{O} = (o_1, o_2, ..., o_T)$，计算该观测序列出现的概率 $P(\mathbf{O} \mid \lambda)$。
+> 给定模型 $\lambda = (A, B, \pi)$ 和观测序列 $\boldsymbol{O} = (o_1, o_2, ..., o_T)$，计算该观测序列出现的概率 $P(\boldsymbol{O} \mid \lambda)$。
 
 #### 3.1.1 作用意义
 
@@ -172,7 +172,7 @@ HMM 的建模能力依赖于对**双重不确定性**的刻画：
 
 #### 3.1.2 算法与复杂度
 
-评估问题的核心是高效计算 $P(\mathbf{O} \mid \lambda)$。下表给出两种经典动态规划算法及其复杂度对比。
+评估问题的核心是高效计算 $P(\boldsymbol{O} \mid \lambda)$。下表给出两种经典动态规划算法及其复杂度对比。
 
 | 算法         | 核心原理                                                             | 时间复杂度 | 空间复杂度 |
 | ------------ | -------------------------------------------------------------------- | ---------- | ---------- |
@@ -188,17 +188,17 @@ $$
 **示例计算**（天气模型，$T=3$）：
 
 - 状态数 $N=2$，共需 $2^2 \times 3 = 12$ 次乘加计算；
-- 得到 $P(\mathbf{O} \mid \lambda) = \boxed{0.03564}$（其中 $\mathbf{O} = (\text{散步}, \text{购物}, \text{打游戏})$，详见第 5 节）。
+- 得到 $P(\boldsymbol{O} \mid \lambda) = \boxed{0.03564}$（其中 $\boldsymbol{O} = (\text{散步}, \text{购物}, \text{打游戏})$，详见第 5 节）。
 
 ---
 
 ### 3.2 解码问题（Decoding）
 
 > **问题定义**
-> 给定模型 $\lambda$ 和观测序列 $\mathbf{O}$，寻找最可能的隐藏状态序列：
+> 给定模型 $\lambda$ 和观测序列 $\boldsymbol{O}$，寻找最可能的隐藏状态序列：
 >
 > $$
-> S^* = \arg\max_S P(S \mid \mathbf{O}, \lambda)
+> S^* = \arg\max_S P(S \mid \boldsymbol{O}, \lambda)
 > $$
 
 #### 3.2.1 作用意义
@@ -238,17 +238,17 @@ $$
 
 | 模型类型 | HMM（生成式）               | CRF（判别式）                   |
 | -------- | --------------------------- | ------------------------------- |
-| 建模目标 | 联合分布 $P(S, \mathbf{O})$ | 条件分布 $P(S \mid \mathbf{O})$ |
+| 建模目标 | 联合分布 $P(S, \boldsymbol{O})$ | 条件分布 $P(S \mid \boldsymbol{O})$ |
 | 特征建模 | 仅依赖当前状态              | 支持复杂上下文特征              |
 | 训练数据 | 可缺失状态序列              | 需完整标注序列                  |
 
 ### 3.3 学习问题（Learning）
 
 > **问题定义**
-> 给定多条观测序列数据集 $\mathcal{D}=\{\mathbf{O}^{(1)}, ..., \mathbf{O}^{(K)}\}$，估计使数据似然最大化的模型参数：
+> 给定多条观测序列数据集 $\mathcal{D}=\{\boldsymbol{O}^{(1)}, ..., \boldsymbol{O}^{(K)}\}$，估计使数据似然最大化的模型参数：
 >
 > $$
-> \lambda^* = \arg\max_\lambda P(\mathcal{D} \mid \lambda) = \arg\max_\lambda \prod_{k=1}^{K} P(\mathbf{O}^{(k)} \mid \lambda)
+> \lambda^* = \arg\max_\lambda P(\mathcal{D} \mid \lambda) = \arg\max_\lambda \prod_{k=1}^{K} P(\boldsymbol{O}^{(k)} \mid \lambda)
 > $$
 
 #### 3.3.1 作用意义
@@ -264,7 +264,7 @@ $$
    利用当前参数计算期望概率：
 
    $$
-   \gamma_t(i) = P(S_t=i \mid \mathbf{O}, \lambda), \quad \xi_t(i,j) = P(S_t=i, S_{t+1}=j \mid \mathbf{O}, \lambda)
+   \gamma_t(i) = P(S_t=i \mid \boldsymbol{O}, \lambda), \quad \xi_t(i,j) = P(S_t=i, S_{t+1}=j \mid \boldsymbol{O}, \lambda)
    $$
 
 2. **M 步（最大化）**：
@@ -372,7 +372,7 @@ $$
 假设我们观测到连续三天的活动为：
 
 $$
-\mathbf{O} = (\text{散步}, \text{购物}, \text{打游戏})
+\boldsymbol{O} = (\text{散步}, \text{购物}, \text{打游戏})
 $$
 
 我们希望解决以下两个核心问题：
@@ -382,7 +382,7 @@ $$
 计算该活动序列在当前模型下的发生概率：
 
 $$
-P(\mathbf{O} \mid \lambda) = ?
+P(\boldsymbol{O} \mid \lambda) = ?
 $$
 
 **现实意义**：用于判断观测行为是否符合模型预测，辅助进行异常检测或行为建模评估。
@@ -392,7 +392,7 @@ $$
 推断最可能对应的天气状态序列：
 
 $$
-S^* = \arg\max_S P(S \mid \mathbf{O}, \lambda)
+S^* = \arg\max_S P(S \mid \boldsymbol{O}, \lambda)
 $$
 
 **现实意义**：通过用户行为反推隐藏状态（如天气、情绪、偏好等），常用于序列标注任务。
@@ -401,7 +401,7 @@ $$
 
 该示例将在第 5 章中作为贯穿案例，逐步演示以下内容：
 
-1. **前向算法（Forward Algorithm）**：计算 $P(\mathbf{O} \mid \lambda) = 0.03564$
+1. **前向算法（Forward Algorithm）**：计算 $P(\boldsymbol{O} \mid \lambda) = 0.03564$
 2. **维特比算法（Viterbi Algorithm）**：求解最优状态路径 $S^* = (\text{晴}, \text{雨}, \text{雨})$
 3. **参数敏感性分析**：当调整转移/发射概率（并保持每行概率和为 1）时，前向概率与最优路径会随之变化，体现模型对参数扰动的响应能力；具体变化以重新运行前向/维特比计算结果为准。
 
@@ -414,15 +414,15 @@ $$
 - **隐藏状态**：$S = \{\text{晴}, \text{雨}\}$
 - **观测变量**：$O = \{\text{散步}, \text{购物}, \text{打游戏}\}$
 - **参数**：$\lambda = (A, B, \pi)$ 如第 4 章定义
-- **观测序列**：$\mathbf{O} = (\text{散步}, \text{购物}, \text{打游戏})$
+- **观测序列**：$\boldsymbol{O} = (\text{散步}, \text{购物}, \text{打游戏})$
 
 ### 5.1 前向算法（评估问题）
 
-本小节通过前向变量的动态规划递推，计算给定观测序列的似然 $P(\mathbf{O} \mid \lambda)$。
+本小节通过前向变量的动态规划递推，计算给定观测序列的似然 $P(\boldsymbol{O} \mid \lambda)$。
 
 #### 5.1.1 算法目标
 
-计算观测序列概率 $P(\mathbf{O} \mid \lambda)$，评估模型对数据的解释能力。
+计算观测序列概率 $P(\boldsymbol{O} \mid \lambda)$，评估模型对数据的解释能力。
 
 #### 5.1.2 算法推导
 
@@ -474,7 +474,7 @@ graph LR
 
 4. **结果汇总**：
    $$
-   P(\mathbf{O} \mid \lambda) = 0.00774 + 0.0279 = 0.03564
+   P(\boldsymbol{O} \mid \lambda) = 0.00774 + 0.0279 = 0.03564
    $$
 
 **复杂度分析**：
@@ -488,7 +488,7 @@ graph LR
 
 #### 5.2.1 算法目标
 
-寻找最优状态序列 $S^* = \arg\max_S P(S \mid \mathbf{O}, \lambda)$。
+寻找最优状态序列 $S^* = \arg\max_S P(S \mid \boldsymbol{O}, \lambda)$。
 
 #### 5.2.2 算法推导
 
@@ -585,9 +585,9 @@ $$
 
 | 问题类型 | 输入                  | 输出                         | 算法       | 核心思想           |
 | -------- | --------------------- | ---------------------------- | ---------- | ------------------ |
-| 评估问题 | $\lambda, \mathbf{O}$ | $P(\mathbf{O} \mid \lambda)$ | 前向算法   | 动态规划求路径和   |
-| 解码问题 | $\lambda, \mathbf{O}$ | $S^*$                        | 维特比算法 | 动态规划求最优路径 |
-| 学习问题 | $\{\mathbf{O}\}$      | $\lambda^*$                  | Baum-Welch | EM 期望最大化      |
+| 评估问题 | $\lambda, \boldsymbol{O}$ | $P(\boldsymbol{O} \mid \lambda)$ | 前向算法   | 动态规划求路径和   |
+| 解码问题 | $\lambda, \boldsymbol{O}$ | $S^*$                        | 维特比算法 | 动态规划求最优路径 |
+| 学习问题 | $\{\boldsymbol{O}\}$      | $\lambda^*$                  | Baum-Welch | EM 期望最大化      |
 
 ---
 
@@ -677,7 +677,7 @@ $$
 
 | 特性       | HMM（生成式）            | CRF（判别式）             |
 | ---------- | ------------------------ | ------------------------- |
-| 建模目标   | $P(S,\mathbf{O})$        | $P(S \mid \mathbf{O})$    |
+| 建模目标   | $P(S,\boldsymbol{O})$        | $P(S \mid \boldsymbol{O})$    |
 | 特征工程   | 仅当前状态相关特征       | 可包含任意上下文特征      |
 | 数据要求   | 可无标注（EM）或监督训练 | 需要状态序列标注          |
 | 计算复杂度 | $O(N^2T)$                | $O(N^kT)$（k 为特征阶数） |
@@ -919,7 +919,7 @@ assert np.allclose(model.emissionprob_.sum(axis=1), 1.0), "发射矩阵行和必
 
 1. **状态序列**：显示最可能的天气变化路径
 2. **维特比对数概率**：对应“最优路径”概率，用于解码问题的最优路径评分
-3. **前向对数似然**：对应 $P(\mathbf{O} \mid \lambda)$，用于评估问题，需取指数还原为概率
+3. **前向对数似然**：对应 $P(\boldsymbol{O} \mid \lambda)$，用于评估问题，需取指数还原为概率
 
 ### 8.5 工程实践技巧
 
